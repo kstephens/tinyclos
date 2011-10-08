@@ -1,0 +1,107 @@
+This message will be of interest to: (i) People who are interested in
+metaobject protocols, particularly metaobject protocols for Lisp-based
+object-oriented languages; and (ii) people who are interested in Lisp-
+based object-oriented languages like CLOS and Dylan.  In this message,
+we announce the public availability of the Scheme implementation of a
+`kernelized' CLOS, with a metaobject protocol.  (If you are interested
+only in OO languages, and not metaobject protocols, you can skip the
+third, fourth and fifth paragraphs of this message.)
+
+One stumbling block for people interested in playing with the metaobject
+protocol (MOP) ideas has been the relative complexity of working in
+Common Lisp.  This has been a particular obstacle for undergraduates and
+others who normally work in Scheme (or a very reduced Common Lisp).  To
+try and address this, we have designed and implemented a Scheme
+embedding of a core subset of CLOS, with a corresponding core MOP.
+
+Since our primary goal is pedagogical in nature, we have been able to
+produce an extremely lean language, MOP and implementation.  The
+implementation is even simpler than the simple CLOS found in `The Art of
+the Metaobject Protocol,' weighing in at around 850 lines of code,
+including (some) comments and documentation.
+
+By making the new language and MOP be the core of CLOS and the CLOS MOP,
+rather than some completely new language, our goal was to make possible
+for people to work with existing written materials -- primarily `The Art
+of the Metaobject Protocol' (AMOP) -- when playing with this system.
+(It should also be possible for people working with Tiny CLOS to get
+value from reading papers about others MOPs, such as ABLC/R, 3KRS and
+others.)  A side benefit of this approach is that Tiny CLOS is close to
+a core of Dylan, so people interested in that language may find value in
+playing with Tiny CLOS as well.)
+
+The MOP in Tiny CLOS is very simple -- 8 introspective procedures and 9
+intercessory generics -- but it retains much of the power of both of the
+MOPs found in AMOP.  Even though the Tiny CLOS implementation itself
+isn't optimized, this MOP is amenable to optimization, using techniques
+like those mentioned in AMOP.  In fact, the slot access protocol used in
+this MOP is such that it should be possible to get better performance
+than is possible with the CLOS MOP.
+
+While it isn't our primary goal, Tiny CLOS can also be used by those who
+are simply intereted in CLOS/Dylan style OO languages.  That is, you can
+play with the base language without even thinking about the MOP.  A
+great deal has already been said and written about how to learn, think
+about and teach OOP and CLOS-like languages, so we won't say any more
+about that.  But, it is important to point out a significant difference
+between Tiny CLOS and CLOS/Dylan.  In Tiny CLOS, slot names are not
+required to be symbols, they can be any Scheme datum (object).  (They
+are compared using eq?.)  This means that one can use the lexical
+scoping mechanisms of Scheme to achieve a greater degree of
+encapsulation than is possible in CLOS.  For more on this, see the
+second and third examples in the examples file.
+
+Accompanying Tiny CLOS is a file of examples, that show how the base
+language works, and how to use the MOP to do several common extensions.
+Other things people might want to write are: before and after methods,
+slot filling initargs, beta-like languages, singleton methods etc.
+
+To make distribution simple, Tiny CLOS is available by anonymous ftp
+from parcftp.xerox.com:/pub/mops.  There are five files of interest:
+
+  
+ tiny-annouce.text  This message.
+
+ support.scm        Just a bunch of useful stuff.
+                    (All implementation specific mods (are supposed
+                    to) go in here.)
+ tiny-clos.scm      The main program.
+ tiny-examples.scm  A few little examples of using this language
+                    and this MOP.
+ tiny-rpp.text      The reflective processor program for this
+                    MOP.  This file was generated, by hand, from
+                    tiny-clos.scm by removing all the code that
+                    deals with bootstrapping or grounding out
+                    the tower.  That is, this is the code/protocol
+                    that you should `think of' as running at the
+                    next level, when ignoring issues of circularity.
+
+
+MIT Scheme 11.74 is the only Scheme we have access to, so that is the
+only Scheme in which we have run this stuff.  But, it should run with
+only minor mods in other Schemes as well.  (Please send us those mods
+so they can be included in the sources!)
+
+
+This language, this MOP, and this implementation should not be treated
+as any sort of finished product.  This whole thing was cranked out
+relatively quickly, in response to an immediate need for simplified
+Scheme embeddings of this stuff.  We are very interested in any
+suggestions or improvements you might have or make.  So, please send
+them in!
+
+(It is also worth knowing that this is the first Scheme program I have
+written in 10 years, so I'm willing to believe I have a lot to learn
+about good Scheme style.  Rather than just snickering, please let me
+know about stupid things this code does in that regard.)
+
+One other note.  You will notice that these files have a copyright
+notice on them, as is the fashion these days.  It isn't copyleft, it is
+somewhat more liberal than that.  If you have any questions about it,
+send us mail.
+
+Finally, please let us know if you decide to play with this stuff, and
+if you want to be on the mops@parc.xerox.com mailing list.  (Note,
+please don't use this mailing list for adminstrative stuff.  It is for
+technical questions and discussions.  For administrative stuff, send
+mail to Gregor@parc.xerox.com.)
